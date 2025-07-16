@@ -2,131 +2,195 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Wat Word Jij Later?</title>
+  <title>Beroepentest voor Kinderen</title>
   <style>
-    body { font-family: Comic Sans MS, cursive; background-color: #f0f8ff; max-width: 900px; margin: auto; padding: 20px; }
-    h1 { text-align: center; color: #ff6f61; font-size: 2.5em; }
-    .vraag, .naam { background: #fff; padding: 15px; margin: 10px 0; border-radius: 12px; box-shadow: 2px 2px 5px #ccc; }
-    label { font-size: 1.1em; display: block; margin-bottom: 8px; }
-    input[type="text"] { width: 100%; padding: 10px; font-size: 1em; margin-top: 5px; border-radius: 8px; border: 1px solid #ccc; }
-    input[type="radio"] { margin-right: 5px; transform: scale(1.2); }
-    button {
-      display: block; margin: 30px auto; padding: 15px 30px;
-      font-size: 1.2em; background-color: #4CAF50; color: white;
-      border: none; border-radius: 12px; cursor: pointer;
+    body {
+      font-family: Comic Sans MS, cursive, sans-serif;
+      background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+      margin: 0;
+      padding: 20px;
     }
-    button:hover { background-color: #45a049; }
+    h1, h2 {
+      text-align: center;
+    }
+    form {
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .vraag {
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #f77e7e;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 20px;
+      font-size: 1.2em;
+      display: block;
+      margin: 20px auto;
+      cursor: pointer;
+    }
+    .resultaat {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #fcb69f;
+    }
   </style>
 </head>
 <body>
-  <h1>🎯 Wat Word Jij Later?</h1>
-  <form id="beroepenTest">
-    <div class="naam">
-      <label>Wat is je naam?</label>
-      <input type="text" id="naam" required>
-    </div>
-    <div id="vragen"></div>
-    <button type="submit">🎁 Toon Mijn Beroep!</button>
+  <h1>🌟 Wat Word Jij Later? 🌟</h1>
+
+  <form id="beroepentest">
+    <label>Wat is je naam?</label>
+    <input type="text" id="naam" required />
+
+    <div id="vragenContainer"></div>
+
+    <button type="submit">Klaar? Klik en ontdek je toekomst!</button>
   </form>
 
+  <div class="resultaat">
+    <h2>📊 Resultaten van Iedereen</h2>
+    <table>
+      <thead><tr><th>Naam</th><th>Beroep</th><th>Tijd</th></tr></thead>
+      <tbody id="resultatenTabel"></tbody>
+    </table>
+  </div>
+
   <script>
-    const vragen = [
-      { vraag: "🎨 Hou je van tekenen?", punten: { kunstenaar: 2 } },
-      { vraag: "🐶 Hou je van dieren?", punten: { dierenarts: 2 } },
-      { vraag: "🎮 Speel je graag games?", punten: { programmeur: 2, gameontwerper: 1 } },
-      { vraag: "🧑‍🏫 Leg je graag dingen uit?", punten: { leraar: 2 } },
-      { vraag: "⚽ Sport je graag?", punten: { sporter: 2 } },
-      { vraag: "🧪 Doe je graag proefjes?", punten: { wetenschapper: 2 } },
-      { vraag: "🚓 Wil je boeven vangen?", punten: { politieagent: 2 } },
-      { vraag: "🚒 Wil je branden blussen?", punten: { brandweerman: 2 } },
-      { vraag: "🍳 Kook je graag?", punten: { kok: 2 } },
-      { vraag: "📚 Lees je graag boeken?", punten: { schrijver: 2 } },
-      { vraag: "🎶 Hou je van muziek maken?", punten: { muzikant: 2 } },
-      { vraag: "✈️ Droom je van vliegen?", punten: { piloot: 2 } },
-      { vraag: "🔨 Vind je bouwen leuk?", punten: { timmerman: 2 } },
-      { vraag: "🏥 Wil je mensen beter maken?", punten: { dokter: 2 } },
-      { vraag: "🎤 Zing je graag?", punten: { zanger: 2 } },
-      { vraag: "💃 Dans je graag?", punten: { danser: 2 } },
-      { vraag: "🏗️ Hou je van dingen in elkaar zetten?", punten: { bouwvakker: 2 } },
-      { vraag: "✂️ Knip je graag haar?", punten: { kapper: 2 } },
-      { vraag: "📸 Maak je graag foto's?", punten: { fotograaf: 2 } },
-      { vraag: "🎬 Kijk je graag films?", punten: { scenarioschrijver: 2 } },
-      { vraag: "🚴‍♀️ Fiets je graag buiten?", punten: { sporter: 1 } },
-      { vraag: "👨‍👩‍👧 Werk je graag in groepjes?", punten: { leraar: 1, dokter: 1 } },
-      { vraag: "👩‍💻 Werk je graag alleen?", punten: { programmeur: 2 } },
-      { vraag: "📖 Schrijf je verhalen?", punten: { schrijver: 2 } },
-      { vraag: "🧸 Speel je graag met lego?", punten: { gameontwerper: 1, bouwvakker: 1 } },
-      { vraag: "🌲 Ben je graag in de natuur?", punten: { boswachter: 2 } },
-      { vraag: "🧠 Los je graag puzzels op?", punten: { wetenschapper: 2 } },
-      { vraag: "🧱 Knutsel je graag?", punten: { kunstenaar: 1, timmerman: 1 } },
-      { vraag: "🧮 Ben je goed in rekenen?", punten: { programmeur: 1, wetenschapper: 1 } },
-      { vraag: "🎙️ Hou je van presenteren?", punten: { leraar: 1, zanger: 1 } },
-      { vraag: "😂 Vertel je graag grappen?", punten: { acteur: 2 } },
-      { vraag: "🐠 Zorg je graag voor dieren?", punten: { dierenarts: 2 } },
-      { vraag: "📊 Vind je cijfers interessant?", punten: { accountant: 2 } },
-      { vraag: "⚒️ Werk je graag met gereedschap?", punten: { timmerman: 2 } },
-      { vraag: "🎯 Vind je doelen halen leuk?", punten: { sporter: 2, politieagent: 1 } },
-      { vraag: "🎭 Speel je graag toneel?", punten: { acteur: 2 } },
-      { vraag: "👓 Lees je graag strips?", punten: { schrijver: 1, kunstenaar: 1 } },
-      { vraag: "🧑‍🚀 Wil je naar de ruimte?", punten: { astronaut: 2 } },
-      { vraag: "📐 Ben je goed in tekenen met linialen?", punten: { architect: 2 } },
-      { vraag: "🧱 Bouw je graag dingen op de computer?", punten: { programmeur: 2 } },
-      { vraag: "🎮 Maak je je eigen games?", punten: { gameontwerper: 3 } },
-      { vraag: "📦 Organiseer je graag spullen?", punten: { logistiekmedewerker: 2 } },
-      { vraag: "📣 Help je graag mensen met problemen?", punten: { psycholoog: 2 } },
-      { vraag: "🧁 Bak je graag koekjes?", punten: { kok: 1, bakker: 2 } },
-      { vraag: "🧵 Maak je graag kleding?", punten: { modeontwerper: 2 } },
-      { vraag: "🔬 Kijk je graag met een microscoop?", punten: { wetenschapper: 2 } },
-      { vraag: "🧩 Los je graag raadsels op?", punten: { detective: 2 } },
-      { vraag: "🌍 Vind je landen en kaarten leuk?", punten: { aardrijkskundeleraar: 2 } },
-      { vraag: "🖥️ Programmeer je al?", punten: { programmeur: 3 } },
-      { vraag: "📕 Lees je vaak verhalen?", punten: { schrijver: 2 } },
-      { vraag: "🧙 Hou je van fantasie?", punten: { scenarioschrijver: 2 } },
-      { vraag: "🚑 Help je mensen in nood?", punten: { dokter: 2, verpleger: 1 } },
-      { vraag: "📺 Maak je graag filmpjes?", punten: { filmmaker: 2 } }
+    const beroepenOpties = {
+      "Kunstenaar": ["tekent graag", "houdt van schilderen", "maakt kunstwerken"],
+      "Dierenarts": ["zorgt voor dieren", "wil zieke dieren helpen", "houdt van beestjes"],
+      "Programmeur": ["maakt spelletjes", "programmeert", "zit graag achter de computer"],
+      "Brandweer": ["blust branden", "helpt mensen in nood", "is dapper"],
+      "Leraar": ["legt dingen uit", "leert graag anderen iets", "houdt van school"],
+      "Zanger": ["zingt vaak", "houdt van optreden", "luistert veel muziek"],
+      "Wetenschapper": ["doet proefjes", "ontdekt dingen", "is nieuwsgierig"],
+      "Bakker": ["bakt koekjes", "houdt van brood", "helpt in de keuken"],
+      "Piloot": ["wil vliegen", "houdt van vliegtuigen", "reist graag"],
+      "Verpleegkundige": ["zorgt voor mensen", "is lief", "helpt zieken"],
+      "Chauffeur": ["rijdt graag", "houdt van auto's", "wil vrachtwagen besturen"],
+      "Politieagent": ["wil boeven vangen", "is rechtvaardig", "houdt van regels"],
+      "Architect": ["tekent huizen", "maakt ontwerpen", "bouwt dingen"],
+      "Game Designer": ["maakt spelletjes", "houdt van gamen", "is creatief met technologie"],
+      "Modeontwerper": ["ontwerpt kleding", "houdt van mode", "tekent outfits"],
+      "Schrijver": ["schrijft verhalen", "leest graag", "verzint avonturen"],
+      "Acteur": ["speelt toneel", "doet alsof", "staat graag op het podium"],
+      "Kok": ["maakt eten", "kookt graag", "probeert recepten"],
+      "Tuinier": ["werkt graag buiten", "houdt van planten", "maakt tuinen mooi"],
+      "Muzikant": ["bespeelt een instrument", "maakt muziek", "houdt van optreden"],
+      "Kapster": ["knipt haar", "maakt kapsels", "speelt kappertje"],
+      "Fotograaf": ["maakt foto's", "houdt van camera's", "legt dingen vast"],
+      "Danser": ["danst veel", "beweegt graag", "treedt op"],
+      "Autotechnicus": ["sleutelt aan auto's", "houdt van motoren", "repareert voertuigen"],
+      "Timmerman": ["werkt met hout", "maakt meubels", "bouwt dingen"],
+      "Rechter": ["vindt regels belangrijk", "is eerlijk", "wil mensen helpen met beslissingen"],
+      "Dierenverzorger": ["werkt in dierentuin", "voert dieren", "maakt hokken schoon"],
+      "Bibliothecaris": ["houdt van boeken", "helpt mensen lezen", "werkt graag stil"],
+      "Journalist": ["vraagt veel", "schrijft nieuws", "is nieuwsgierig"],
+      "Kinderarts": ["helpt zieke kinderen", "is zorgzaam", "werkt in ziekenhuis"],
+      "Youtuber": ["maakt filmpjes", "houdt van camera", "is grappig op video"]
+    };
+
+    const antwoordOpties = [
+      { label: "Heel leuk", waarde: 5 },
+      { label: "Leuk", waarde: 4 },
+      { label: "Beetje", waarde: 3 },
+      { label: "Niet leuk", waarde: 2 },
+      { label: "Helemaal niet leuk", waarde: 1 },
     ];
 
-    const vragenDiv = document.getElementById("vragen");
-
-    vragen.forEach((item, index) => {
-      const div = document.createElement("div");
-      div.className = "vraag";
-      div.innerHTML = `
-        <label>${index + 1}. ${item.vraag}</label>
-        <input type="radio" name="vraag${index}" value="5" required> Heel leuk
-        <input type="radio" name="vraag${index}" value="4"> Leuk
-        <input type="radio" name="vraag${index}" value="3"> Beetje
-        <input type="radio" name="vraag${index}" value="2"> Niet leuk
-        <input type="radio" name="vraag${index}" value="1"> Helemaal niet leuk
-      `;
-      vragenDiv.appendChild(div);
-    });
-
-    document.getElementById("beroepenTest").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const naam = document.getElementById("naam").value;
-      const scores = {};
-      vragen.forEach((item, index) => {
-        const antwoord = parseInt(document.querySelector(`input[name="vraag${index}"]:checked`).value);
-        const factor = (antwoord - 1) / 4; // 0 tot 1
-        for (let beroep in item.punten) {
-          scores[beroep] = (scores[beroep] || 0) + item.punten[beroep] * factor;
-        }
+    const vragen = [];
+    for (const [beroep, kenmerken] of Object.entries(beroepenOpties)) {
+      kenmerken.forEach(kenmerk => {
+        vragen.push({ tekst: `Vind je dit leuk: ${kenmerk}?`, beroep });
       });
+    }
 
-      let hoogste = 0;
-      let beste = "Onbekend";
-      for (let beroep in scores) {
-        if (scores[beroep] > hoogste) {
-          hoogste = scores[beroep];
-          beste = beroep;
-        }
-      }
-
-      localStorage.setItem("resultaat_naam", naam);
-      localStorage.setItem("resultaat_beroep", beste);
-      window.location.href = "resultaat.html";
+    const container = document.getElementById('vragenContainer');
+    vragen.forEach((vraag, index) => {
+      const div = document.createElement('div');
+      div.className = 'vraag';
+      div.innerHTML = `
+        <label>${index + 1}. ${vraag.tekst}</label>
+        <select data-beroep="${vraag.beroep}" required>
+          <option value="">-- Kies --</option>
+          ${antwoordOpties.map(opt => `<option value="${opt.waarde}">${opt.label}</option>`).join('')}
+        </select>
+      `;
+      container.appendChild(div);
     });
+
+    function bepaalBeroep(responses) {
+      const scorePerBeroep = {};
+      responses.forEach(r => {
+        scorePerBeroep[r.beroep] = (scorePerBeroep[r.beroep] || 0) + parseInt(r.waarde);
+      });
+      return Object.entries(scorePerBeroep).sort((a, b) => b[1] - a[1])[0][0];
+    }
+
+    document.getElementById('beroepentest').addEventListener('submit', async e => {
+      e.preventDefault();
+      const naam = document.getElementById('naam').value.trim();
+      const selects = container.querySelectorAll('select');
+      const antwoorden = Array.from(selects).map(select => ({
+        beroep: select.dataset.beroep,
+        waarde: select.value
+      }));
+      const beroep = bepaalBeroep(antwoorden);
+      await fetch('/.netlify/functions/opslaan-resultaat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ naam, beroep })
+      });
+      alert(`${naam}, jouw droomberoep is waarschijnlijk: ${beroep}!`);
+      laadResultaten();
+      e.target.reset();
+    });
+
+    async function laadResultaten() {
+      const res = await fetch('/.netlify/functions/haal-resultaten');
+      const data = await res.json();
+      const tabel = document.getElementById('resultatenTabel');
+      tabel.innerHTML = '';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${row.naam}</td><td>${row.beroep}</td><td>${new Date(row.tijd).toLocaleString()}</td>`;
+        tabel.appendChild(tr);
+      });
+    }
+
+    laadResultaten();
   </script>
 </body>
 </html>
