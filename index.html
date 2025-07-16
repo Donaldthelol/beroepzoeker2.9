@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Ontdek Jouw Toekomstige Beroep!</title>
+  <title>Wat Word Jij Later?</title>
   <style>
     body {
       font-family: Comic Sans MS, cursive, sans-serif;
@@ -69,11 +69,11 @@
 </head>
 <body>
   <h1>🎯 Wat Word Jij Later?</h1>
-  <p>Beantwoord de vragen hieronder met <strong>Ja</strong> of <strong>Nee</strong>. Aan het eind vertellen wij welk beroep bij jou past! 🕵️‍♂️👩‍⚕️🎨</p>
+  <p>Beantwoord de vragen met <strong>Ja</strong>, <strong>Een beetje</strong> of <strong>Nee</strong>. Ontdek welk beroep bij jou past! 🕵️‍♀️🎨🧑‍🚀</p>
 
   <form id="beroepenTest">
     <div id="vragen"></div>
-    <button type="submit">🎁 Bekijk Mijn Toekomstige Beroep!</button>
+    <button type="submit">🎁 Toon Mijn Beroep!</button>
   </form>
 
   <div id="resultaat"></div>
@@ -136,6 +136,7 @@
       div.innerHTML = `
         <label>${index + 1}. ${item.vraag}</label><br>
         <input type="radio" name="vraag${index}" value="ja" required> Ja
+        <input type="radio" name="vraag${index}" value="beetje"> Een beetje
         <input type="radio" name="vraag${index}" value="nee"> Nee
       `;
       vragenDiv.appendChild(div);
@@ -146,15 +147,16 @@
       const scores = {};
       vragen.forEach((item, index) => {
         const antwoord = document.querySelector(`input[name="vraag${index}"]:checked`).value;
-        if (antwoord === "ja") {
-          for (let beroep in item.punten) {
-            scores[beroep] = (scores[beroep] || 0) + item.punten[beroep];
-          }
+        let factor = 0;
+        if (antwoord === "ja") factor = 1;
+        else if (antwoord === "beetje") factor = 0.5;
+        for (let beroep in item.punten) {
+          scores[beroep] = (scores[beroep] || 0) + item.punten[beroep] * factor;
         }
       });
 
       let hoogsteScore = 0;
-      let besteBeroep = "🤷 geen idee, probeer het nog eens!";
+      let besteBeroep = "🤷 Geen idee! Probeer nog eens.";
       for (let beroep in scores) {
         if (scores[beroep] > hoogsteScore) {
           hoogsteScore = scores[beroep];
@@ -162,7 +164,8 @@
         }
       }
 
-      document.getElementById("resultaat").innerHTML = `🎉 Jij zou later een <strong>${besteBeroep.replaceAll("_", " ")}</strong> kunnen worden! 🥳`;
+      document.getElementById("resultaat").innerHTML =
+        `🎉 Jij zou later een <strong>${besteBeroep.replaceAll("_", " ")}</strong> kunnen worden! 🥳`;
     });
   </script>
 </body>
