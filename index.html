@@ -2,85 +2,134 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Beroepen Test voor Kinderen</title>
+  <title>Ontdek Jouw Toekomstige Beroep!</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
-    h1 { color: #2b78e4; }
-    .vraag { margin: 10px 0; }
-    button { margin-top: 20px; padding: 10px 20px; font-size: 16px; }
-    #resultaat { font-size: 20px; font-weight: bold; margin-top: 20px; color: green; }
+    body {
+      font-family: Comic Sans MS, cursive, sans-serif;
+      background-color: #f0f8ff;
+      color: #333;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff6f61;
+      font-size: 2.5em;
+    }
+
+    p {
+      text-align: center;
+      font-size: 1.2em;
+    }
+
+    .vraag {
+      background-color: #ffffff;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 15px;
+      box-shadow: 2px 2px 6px #ccc;
+    }
+
+    label {
+      font-size: 1.1em;
+    }
+
+    input[type="radio"] {
+      margin: 10px;
+      transform: scale(1.2);
+    }
+
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 5px #888;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #resultaat {
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-top: 30px;
+      color: #2b8a3e;
+    }
   </style>
 </head>
 <body>
-  <h1>Welke Beroep Past Bij Jou?</h1>
-  <p>Beantwoord de vragen met "Ja" of "Nee". Aan het eind krijg je een leuke beroepssuggestie!</p>
+  <h1>🎯 Wat Word Jij Later?</h1>
+  <p>Beantwoord de vragen hieronder met <strong>Ja</strong> of <strong>Nee</strong>. Aan het eind vertellen wij welk beroep bij jou past! 🕵️‍♂️👩‍⚕️🎨</p>
 
   <form id="beroepenTest">
     <div id="vragen"></div>
-    <button type="submit">Bekijk Mijn Beroep!</button>
+    <button type="submit">🎁 Bekijk Mijn Toekomstige Beroep!</button>
   </form>
 
   <div id="resultaat"></div>
 
   <script>
     const vragen = [
-      { vraag: "Hou je van dieren?", punten: { dierenarts: 2, bioloog: 1 } },
-      { vraag: "Speel je graag computerspelletjes?", punten: { gameontwerper: 2, programmeur: 1 } },
-      { vraag: "Ben je goed in tekenen of schilderen?", punten: { kunstenaar: 2, illustrator: 1 } },
-      { vraag: "Vind je het leuk om mensen te helpen?", punten: { dokter: 2, psycholoog: 2, verpleegkundige: 1 } },
-      { vraag: "Hou je van muziek maken?", punten: { muzikant: 2, artiest: 1 } },
-      { vraag: "Ben je dol op boeken lezen?", punten: { schrijver: 2, leraar: 1 } },
-      { vraag: "Werk je graag buiten?", punten: { boswachter: 2, boer: 2, tuinier: 1 } },
-      { vraag: "Hou je van Lego of bouwen?", punten: { architect: 2, ingenieur: 2, timmerman: 1 } },
-      { vraag: "Vind je het leuk om toneel te spelen?", punten: { acteur: 2, presentator: 1 } },
-      { vraag: "Hou je van koken of bakken?", punten: { kok: 2, bakker: 2 } },
-      { vraag: "Ben je goed met cijfers?", punten: { accountant: 2, programmeur: 1, ingenieur: 1 } },
-      { vraag: "Los je graag puzzels op?", punten: { detective: 2, programmeur: 1, wetenschapper: 1 } },
-      { vraag: "Vind je wetenschap leuk?", punten: { wetenschapper: 2, bioloog: 1 } },
-      { vraag: "Speel je graag met robots of techniek?", punten: { ingenieur: 2, programmeur: 2 } },
-      { vraag: "Hou je van verhalen vertellen?", punten: { schrijver: 2, acteur: 1 } },
-      { vraag: "Ben je sportief?", punten: { sporter: 2, coach: 1 } },
-      { vraag: "Help je graag bij ruzies oplossen?", punten: { psycholoog: 2, politieagent: 1 } },
-      { vraag: "Vind je het leuk om kinderen iets te leren?", punten: { leraar: 2, kindercoach: 1 } },
-      { vraag: "Hou je van foto's maken?", punten: { fotograaf: 2, journalist: 1 } },
-      { vraag: "Wil je beroemd worden?", punten: { artiest: 2, influencer: 2, acteur: 1 } },
-      { vraag: "Zou je in een ziekenhuis willen werken?", punten: { dokter: 2, verpleegkundige: 2 } },
-      { vraag: "Hou je van tekenen op de computer?", punten: { illustrator: 2, grafisch_ontwerper: 2 } },
-      { vraag: "Ben je dol op mode?", punten: { modeontwerper: 2, influencer: 1 } },
-      { vraag: "Wil je mensen beschermen?", punten: { politieagent: 2, brandweerman: 2, soldaat: 1 } },
-      { vraag: "Werk je graag met planten of bloemen?", punten: { tuinier: 2, bloemist: 1 } },
-      { vraag: "Hou je van vliegtuigen of raketten?", punten: { piloot: 2, astronaut: 2 } },
-      { vraag: "Ben je nieuwsgierig naar de ruimte?", punten: { astronaut: 2, wetenschapper: 1 } },
-      { vraag: "Zou je een winkel willen runnen?", punten: { ondernemer: 2, winkelmanager: 2 } },
-      { vraag: "Wil je je eigen bedrijf starten?", punten: { ondernemer: 2, uitvinder: 1 } },
-      { vraag: "Hou je van auto’s of machines?", punten: { automonteur: 2, ingenieur: 1 } },
-      { vraag: "Spreek je graag voor groepen?", punten: { presentator: 2, leraar: 1 } },
-      { vraag: "Vind je het leuk om dingen te ontwerpen?", punten: { architect: 2, grafisch_ontwerper: 1 } },
-      { vraag: "Hou je van dieren verzorgen?", punten: { dierenarts: 2, boer: 1 } },
-      { vraag: "Maak je graag grappige filmpjes?", punten: { influencer: 2, acteur: 1 } },
-      { vraag: "Wil je branden blussen?", punten: { brandweerman: 2 } },
-      { vraag: "Zou je mensen willen interviewen?", punten: { journalist: 2, presentator: 1 } },
-      { vraag: "Wil je ooit een boek schrijven?", punten: { schrijver: 2 } },
-      { vraag: "Ben je handig met gereedschap?", punten: { timmerman: 2, automonteur: 1 } },
-      { vraag: "Hou je van spelletjes bedenken?", punten: { gameontwerper: 2 } },
-      { vraag: "Ben je goed in luisteren naar anderen?", punten: { psycholoog: 2, verpleegkundige: 1 } },
-      { vraag: "Werk je graag alleen?", punten: { schrijver: 2, programmeur: 2 } },
-      { vraag: "Werk je liever in een team?", punten: { verpleegkundige: 2, brandweerman: 1, sporter: 1 } },
-      { vraag: "Ben je goed in plannen?", punten: { projectmanager: 2, ondernemer: 1 } },
-      { vraag: "Hou je van dieren tekenen of schilderen?", punten: { kunstenaar: 1, illustrator: 2 } },
-      { vraag: "Droom je ervan om uitvinder te worden?", punten: { uitvinder: 2, wetenschapper: 1 } },
-      { vraag: "Zou je graag op TV willen komen?", punten: { acteur: 2, presentator: 2 } },
-      { vraag: "Wil je de wereld verbeteren?", punten: { dokter: 1, leraar: 1, activist: 2 } },
-      { vraag: "Hou je van het oplossen van raadsels?", punten: { detective: 2, wetenschapper: 1 } },
-      { vraag: "Hou je van het helpen van zieke mensen?", punten: { verpleegkundige: 2, dokter: 1 } },
-      { vraag: "Hou je van natuur en milieu?", punten: { bioloog: 2, activist: 1 } },
-      { vraag: "Wil je mensen trainen of coachen?", punten: { coach: 2, sporter: 1 } },
-      { vraag: "Hou je van alles met superhelden?", punten: { superheld: 2 (gewoon voor de lol 😄) } },
-      { vraag: "Droom je ervan om iets groots te bouwen?", punten: { architect: 2, ingenieur: 2 } }
+      { vraag: "🐶 Hou je van dieren?", punten: { dierenarts: 2, bioloog: 1 } },
+      { vraag: "🎮 Speel je graag computerspelletjes?", punten: { gameontwerper: 2, programmeur: 1 } },
+      { vraag: "🎨 Vind je tekenen of schilderen leuk?", punten: { kunstenaar: 2, illustrator: 2 } },
+      { vraag: "🧑‍⚕️ Help je graag mensen als ze zich niet goed voelen?", punten: { dokter: 2, verpleegkundige: 2, psycholoog: 1 } },
+      { vraag: "🎵 Maak je graag muziek of zing je graag?", punten: { muzikant: 2, artiest: 2 } },
+      { vraag: "📚 Lees je graag boeken?", punten: { schrijver: 2, leraar: 1 } },
+      { vraag: "🌳 Werk je graag buiten in de natuur?", punten: { boswachter: 2, boer: 1, tuinier: 1 } },
+      { vraag: "🧱 Bouw je graag met Lego?", punten: { architect: 2, ingenieur: 2, timmerman: 1 } },
+      { vraag: "🎭 Speel je graag toneel of verkleed je je graag?", punten: { acteur: 2, presentator: 1 } },
+      { vraag: "🍰 Kook of bak je graag?", punten: { kok: 2, bakker: 2 } },
+      { vraag: "🧮 Ben je goed in rekenen of puzzels?", punten: { accountant: 2, programmeur: 1, wetenschapper: 1 } },
+      { vraag: "🔬 Vind je wetenschap of proefjes leuk?", punten: { wetenschapper: 2, uitvinder: 2 } },
+      { vraag: "🤖 Ben je gek op robots of techniek?", punten: { programmeur: 2, ingenieur: 2 } },
+      { vraag: "📖 Vertel je graag verhalen?", punten: { schrijver: 2, acteur: 1 } },
+      { vraag: "⚽ Sport je graag of ben je super actief?", punten: { sporter: 2, coach: 1 } },
+      { vraag: "🕊️ Help je vrienden bij ruzies?", punten: { psycholoog: 2, politieagent: 1 } },
+      { vraag: "📢 Vind je het leuk om dingen uit te leggen aan anderen?", punten: { leraar: 2, coach: 1 } },
+      { vraag: "📸 Maak je graag foto’s of video’s?", punten: { fotograaf: 2, influencer: 1 } },
+      { vraag: "🌟 Droom je ervan om beroemd te worden?", punten: { artiest: 2, acteur: 1, influencer: 2 } },
+      { vraag: "🏥 Wil je werken in een ziekenhuis?", punten: { dokter: 2, verpleegkundige: 2 } },
+      { vraag: "🧵 Hou je van mode of kleding ontwerpen?", punten: { modeontwerper: 2, stylist: 1 } },
+      { vraag: "🧯 Wil je mensen redden bij brand?", punten: { brandweerman: 2, held: 1 } },
+      { vraag: "🚓 Wil je de slechteriken vangen?", punten: { politieagent: 2, detective: 1 } },
+      { vraag: "🌷 Werk je graag met bloemen of planten?", punten: { tuinier: 2, bloemist: 1 } },
+      { vraag: "🚀 Ben je nieuwsgierig naar de ruimte?", punten: { astronaut: 2, wetenschapper: 1 } },
+      { vraag: "🛒 Zou je je eigen winkel willen hebben?", punten: { ondernemer: 2, winkelmanager: 2 } },
+      { vraag: "🛠️ Ben je handig met gereedschap?", punten: { timmerman: 2, automonteur: 1 } },
+      { vraag: "🧠 Vind je nadenken en onderzoeken leuk?", punten: { detective: 2, wetenschapper: 1 } },
+      { vraag: "🎮 Zou je zelf een computerspel willen maken?", punten: { gameontwerper: 2, programmeur: 1 } },
+      { vraag: "📊 Kun je goed plannen of organiseren?", punten: { projectmanager: 2, ondernemer: 1 } },
+      { vraag: "💬 Ben je goed in luisteren naar anderen?", punten: { psycholoog: 2, coach: 1 } },
+      { vraag: "🌎 Wil je de wereld helpen verbeteren?", punten: { activist: 2, leraar: 1 } },
+      { vraag: "🎙️ Wil je op TV of YouTube komen?", punten: { presentator: 2, influencer: 2 } },
+      { vraag: "🧑‍🚀 Droom je ervan om astronaut te worden?", punten: { astronaut: 2 } },
+      { vraag: "💡 Bedenk je graag nieuwe dingen?", punten: { uitvinder: 2, kunstenaar: 1 } },
+      { vraag: "📐 Hou je van dingen meten of tekenen?", punten: { architect: 2, ingenieur: 1 } },
+      { vraag: "👷‍♂️ Werk je graag met machines of auto's?", punten: { automonteur: 2, ingenieur: 1 } },
+      { vraag: "👨‍👧‍👦 Werk je graag met kinderen?", punten: { leraar: 2, kindercoach: 1 } },
+      { vraag: "🐸 Ben je dol op natuur en dieren?", punten: { bioloog: 2, boswachter: 2 } },
+      { vraag: "🎈 Ben je graag creatief bezig?", punten: { kunstenaar: 2, grafisch_ontwerper: 1 } },
+      { vraag: "🛡️ Wil je mensen beschermen?", punten: { politieagent: 2, brandweerman: 1 } },
+      { vraag: "💻 Vind je het leuk om dingen op de computer te maken?", punten: { programmeur: 2, grafisch_ontwerper: 2 } },
+      { vraag: "🧁 Vind je bakken leuker dan koken?", punten: { bakker: 2, kok: 1 } },
+      { vraag: "📦 Zou je een YouTube kanaal willen hebben?", punten: { influencer: 2, presentator: 1 } },
+      { vraag: "🏆 Wil je topsporter worden?", punten: { sporter: 3 } },
+      { vraag: "🧞 Droom je vaak over magische dingen of helden?", punten: { schrijver: 1, superheld: 2 } },
     ];
 
-    // Genereer de vragen
     const vragenDiv = document.getElementById("vragen");
+
     vragen.forEach((item, index) => {
       const div = document.createElement("div");
       div.className = "vraag";
@@ -92,7 +141,6 @@
       vragenDiv.appendChild(div);
     });
 
-    // Verwerk de antwoorden
     document.getElementById("beroepenTest").addEventListener("submit", function(e) {
       e.preventDefault();
       const scores = {};
@@ -105,8 +153,8 @@
         }
       });
 
-      let besteBeroep = "onbekend";
       let hoogsteScore = 0;
+      let besteBeroep = "🤷 geen idee, probeer het nog eens!";
       for (let beroep in scores) {
         if (scores[beroep] > hoogsteScore) {
           hoogsteScore = scores[beroep];
@@ -114,8 +162,7 @@
         }
       }
 
-      document.getElementById("resultaat").innerText =
-        `Jouw toekomstige beroep is: ${besteBeroep.replaceAll("_", " ").toUpperCase()}! 🎉`;
+      document.getElementById("resultaat").innerHTML = `🎉 Jij zou later een <strong>${besteBeroep.replaceAll("_", " ")}</strong> kunnen worden! 🥳`;
     });
   </script>
 </body>
