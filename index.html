@@ -207,16 +207,3 @@ document.addEventListener('keydown', function (e) {
   </script>
 </body>
 </html>
-
-// Als je op K + Y drukt: vul alles random in
-document.addEventListener('keydown', function (e) {
-  if (e.key.toLowerCase() === 'y' && e.ctrlKey) {
-    const selects = container.querySelectorAll('select');
-    selects.forEach(select => {
-      const randomIndex = Math.floor(Math.random() * antwoordOpties.length);
-      select.value = antwoordOpties[randomIndex].waarde;
-    });
-    alert("Alle antwoorden zijn willekeurig ingevuld!");
-  }
-});
-
